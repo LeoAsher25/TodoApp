@@ -1,26 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
-import userThunkActions from "src/services/user/userThunkActions";
+import usersActions from "src/services/user/userRequest";
 import { UserDto } from "src/types/userTypes";
 import { getLocalStorage, setLocalStorage } from "src/utils/localStorage";
 
-interface UserState {
-  currentUser: UserDto | null;
-}
-
-const initialState: UserState = {
+const initialState = {
   currentUser: getLocalStorage("currentUser"),
+  allUser: [],
 };
 
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder.addCase(userThunkActions.getProfile.fulfilled, (state, action) => {
-      const currentUser = action.payload.data;
+  reducers: {
+    getProfile(state, action) {
+      const currentUser = action.payload;
       setLocalStorage("currentUser", currentUser);
       state.currentUser = currentUser;
-    });
+    },
+    getAllUsers(state, action) {
+      const allUser = action.payload.allUsers;
+      state.allUser = allUser;
+    },
   },
 });
 

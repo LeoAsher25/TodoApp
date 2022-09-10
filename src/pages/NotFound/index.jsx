@@ -1,10 +1,8 @@
 import { Button, Result } from "antd";
-import React from "react";
 import { Link } from "react-router-dom";
-import { RouterPaths } from "src/types/commonType";
+import { routerPaths } from "src/constant";
 
-const NotFound: React.FC = () => {
-  console.log("not found");
+const NotFound = () => {
   return (
     <Result
       status="404"
@@ -12,7 +10,7 @@ const NotFound: React.FC = () => {
       subTitle="Sorry, the page you visited does not exist."
       extra={
         <Button type="primary">
-          <Link to={RouterPaths.HOME}> Back Home</Link>
+          <Link to={routerPaths.HOME}> Back Home</Link>
         </Button>
       }
     />

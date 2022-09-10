@@ -1,32 +1,29 @@
 import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
-import { Avatar, Dropdown, Menu } from "antd";
+import { Avatar, Dropdown } from "antd";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { authSliceActions } from "src/services/auth/authSlice";
-import userThunkActions from "src/services/user/userThunkActions";
-import { RootState } from "src/store/rootReducer";
-import { RouterPaths } from "src/types/commonType";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "src/utils/hooks/customReduxHook";
+import { routerPaths } from "src/constant";
+import { authRequest } from "src/services/auth/authRequest";
+import userThunkActions, { userRequest } from "src/services/user/userRequest";
+
 import "./HeaderUserWrap.scss";
 
 const HeaderUserWrap = () => {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
   const handleLogout = () => {
-    dispatch(authSliceActions.logoutMethod());
+    authRequest.logout(dispatch);
   };
 
-  const { currentUser } = useAppSelector((state: RootState) => state.user);
-  const { access_token } = useAppSelector((state: RootState) => state.auth);
+  const { currentUser } = useSelector((state) => state.user);
+  const { access_token } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (!currentUser && access_token) {
-      console.log("accesstoken:", access_token);
-      dispatch(userThunkActions.getProfile());
+      dispatch(userRequest.getProfile(dispatch));
     }
   }, []);
+
   return (
     <div>
       <Dropdown
@@ -42,7 +39,7 @@ const HeaderUserWrap = () => {
                 {
                   key: "1",
                   icon: <UserOutlined />,
-                  label: <Link to={RouterPaths.PROFILE}>Profile</Link>,
+                  label: <Link to={routerPaths.PROFILE}>Profile</Link>,
                 },
                 {
                   key: "2",

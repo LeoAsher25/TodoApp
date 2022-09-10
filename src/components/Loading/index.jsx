@@ -12,7 +12,7 @@ const Loading = () => {
         <div className="cup">
           <div className="top">
             <div className="vapour">
-              {Array.from(Array(20).keys()).map((item: number) => (
+              {Array.from(Array(20).keys()).map((item) => (
                 <span
                   key={item}
                   style={{ animationDelay: `${1.5 * Math.random()}s` }}

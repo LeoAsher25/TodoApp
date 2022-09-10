@@ -8,18 +8,18 @@ import NotFound from "src/pages/NotFound";
 import TodoPage from "src/pages/TodoPage";
 import UserPage from "src/pages/UserPage";
 import PrivatedRoute from "src/routes/PrivatedRoute";
-import { RouterPaths } from "src/types/commonType";
+import { routerPaths } from "src/constant";
 
 const MainRoutes = () => {
   return (
     <Suspense fallback={<Loading />}>
       <Routes>
-        <Route path={RouterPaths.LOGIN} element={<LoginPage />} />
+        <Route path={routerPaths.LOGIN} element={<LoginPage />} />
         <Route path="" element={<PageWrap />}>
           <Route path="" element={<PrivatedRoute />}>
-            <Route path={RouterPaths.HOME} element={<Homepage />} />
-            <Route path={RouterPaths.USER} element={<UserPage />} />
-            <Route path={RouterPaths.TODO} element={<TodoPage />} />
+            <Route path={routerPaths.HOME} element={<Homepage />} />
+            <Route path={routerPaths.USER} element={<UserPage />} />
+            <Route path={routerPaths.TODO} element={<TodoPage />} />
           </Route>
         </Route>
         <Route path="/*" element={<NotFound />} />

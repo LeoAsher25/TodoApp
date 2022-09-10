@@ -1,11 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { RequestStatus } from "src/types/commonType";
+import { RequestStatus } from "src/constant";
 
-interface SettingState {
-  requestStatus: RequestStatus;
-}
-
-const initialState: SettingState = {
+const initialState = {
   requestStatus: RequestStatus.SUCCESS,
 };
 

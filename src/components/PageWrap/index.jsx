@@ -9,7 +9,8 @@ import { Layout, Menu } from "antd";
 import React, { useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import HeaderUserWrap from "src/components/HeaderUserWrap";
-import { RouterPaths } from "src/types/commonType";
+import NotificationWrap from "src/components/NotificationWrap";
+import { routerPaths } from "src/constant";
 import "./PageWrap.scss";
 
 const PageWrap = () => {
@@ -30,17 +31,17 @@ const PageWrap = () => {
               {
                 key: "1",
                 icon: <AppstoreOutlined />,
-                label: <NavLink to={RouterPaths.HOME}>Dashboard</NavLink>,
+                label: <NavLink to={routerPaths.HOME}>Dashboard</NavLink>,
               },
               {
                 key: "2",
                 icon: <TeamOutlined />,
-                label: <NavLink to={RouterPaths.USER}>User</NavLink>,
+                label: <NavLink to={routerPaths.USER}>User</NavLink>,
               },
               {
                 key: "3",
                 icon: <FileDoneOutlined />,
-                label: <NavLink to={RouterPaths.TODO}>To Do</NavLink>,
+                label: <NavLink to={routerPaths.TODO}>To Do</NavLink>,
               },
             ]}
           />
@@ -55,7 +56,10 @@ const PageWrap = () => {
                   onClick: () => setCollapsed(!collapsed),
                 }
               )}
-              <HeaderUserWrap />
+              <div className="action-wrap">
+                <NotificationWrap />
+                <HeaderUserWrap />
+              </div>
             </div>
           </Header>
           <Content className="">

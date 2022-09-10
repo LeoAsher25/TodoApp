@@ -1,0 +1,49 @@
+@import "src/variable.scss";
+
+.home-page {
+  padding: 2rem;
+
+  .heading {
+    font-size: 2rem;
+    font-weight: 700;
+  }
+  .analytical-list {
+    display: flex;
+    margin-top: 5rem;
+
+    .analytical-card {
+      background-color: $white-color;
+      border-radius: 0.5rem;
+      box-shadow: 3px 3px 5px 5px rgba(0, 0, 0, 0.03);
+      padding: 1.5rem 3rem 1.5rem 0;
+
+      margin: 1rem 1rem;
+
+      .card-wrap {
+        display: flex;
+        align-items: center;
+
+        .card-icon {
+          margin: 0 3rem;
+          * {
+            font-size: 3rem;
+          }
+        }
+
+        .card-content {
+          display: flex;
+          flex-direction: column;
+
+          .number {
+            font-size: 2.5rem;
+            font-weight: 700;
+          }
+
+          .label {
+            font-size: 1rem;
+          }
+        }
+      }
+    }
+  }
+}
