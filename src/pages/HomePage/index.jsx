@@ -7,18 +7,18 @@ import "./HomePage.scss";
 
 const Homepage = () => {
   const dispatch = useDispatch();
-  const { allUser } = useSelector((state) => state.user);
-  const { allGroup } = useSelector((state) => state.todo);
+  const { allUsers } = useSelector((state) => state.user);
+  const { allGroups } = useSelector((state) => state.todo);
 
   useEffect(() => {
-    if (allUser.length === 0) {
-      userRequest.getAllUser(dispatch);
+    if (allUsers.length === 0) {
+      userRequest.getAllUsers(dispatch);
     }
   }, []);
 
   useEffect(() => {
-    if (allGroup.length === 0) {
-      todoRequest.getAllGroup(dispatch);
+    if (allGroups.length === 0) {
+      todoRequest.getAllGroups(dispatch);
     }
   }, []);
   return (
@@ -31,7 +31,7 @@ const Homepage = () => {
               <UserOutlined />
             </div>
             <div className="card-content">
-              <div className="number">{allUser.length}</div>
+              <div className="number">{allUsers.length}</div>
               <div className="label">Total users</div>
             </div>
           </div>
@@ -43,7 +43,7 @@ const Homepage = () => {
               <FileDoneOutlined />
             </div>
             <div className="card-content">
-              <div className="number">{allGroup.length}</div>
+              <div className="number">{allGroups.length}</div>
               <div className="label">Total Group</div>
             </div>
           </div>

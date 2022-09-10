@@ -1,0 +1,17 @@
+.card-detail-wrap {
+  .ant-collapse-header-text {
+    display: flex;
+    height: 32px;
+    align-items: center;
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+  .ant-form-item-control-input-content {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .form-wrap {
+    margin-bottom: 4rem;
+  }
+}

@@ -25,7 +25,7 @@ export const userRequest = {
     }
   },
 
-  getAllUser: async function (dispatch) {
+  getAllUsers: async function (dispatch) {
     try {
       const url = "/all-users";
       dispatch(
@@ -47,6 +47,84 @@ export const userRequest = {
         })
       );
       return err.response;
+    }
+  },
+
+  getUserDetail: async function (userId, dispatch) {
+    try {
+      dispatch(
+        settingSliceActions.setItem({
+          requestStatus: RequestStatus.PENDING,
+        })
+      );
+      const url = `/user-details?id=${userId}`;
+      const response = await axiosInstance.get(url);
+      dispatch(
+        settingSliceActions.setItem({
+          requestStatus: RequestStatus.SUCCESS,
+        })
+      );
+
+      return response.data;
+    } catch (err) {
+      dispatch(
+        settingSliceActions.setItem({
+          requestStatus: RequestStatus.ERROR,
+        })
+      );
+      console.log("err: ", err);
+    }
+  },
+
+  updateEmployeeInfo: async function (data, dispatch, cb) {
+    try {
+      dispatch(
+        settingSliceActions.setItem({
+          requestStatus: RequestStatus.PENDING,
+        })
+      );
+      const url = `/update-employee-info`;
+      const response = await axiosInstance.post(url, data);
+      dispatch(
+        settingSliceActions.setItem({
+          requestStatus: RequestStatus.SUCCESS,
+        })
+      );
+      cb();
+      return response.data;
+    } catch (err) {
+      dispatch(
+        settingSliceActions.setItem({
+          requestStatus: RequestStatus.ERROR,
+        })
+      );
+      console.log("err: ", err);
+    }
+  },
+
+  updateEmployeeAuthInfo: async function (data, dispatch, cb) {
+    try {
+      dispatch(
+        settingSliceActions.setItem({
+          requestStatus: RequestStatus.PENDING,
+        })
+      );
+      const url = `/update-employee-auth-info`;
+      const response = await axiosInstance.post(url, data);
+      dispatch(
+        settingSliceActions.setItem({
+          requestStatus: RequestStatus.SUCCESS,
+        })
+      );
+      cb();
+      return response.data;
+    } catch (err) {
+      dispatch(
+        settingSliceActions.setItem({
+          requestStatus: RequestStatus.ERROR,
+        })
+      );
+      console.log("err: ", err);
     }
   },
 };

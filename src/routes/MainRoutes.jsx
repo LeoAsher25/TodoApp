@@ -9,6 +9,7 @@ import TodoPage from "src/pages/TodoPage";
 import UserPage from "src/pages/UserPage";
 import PrivatedRoute from "src/routes/PrivatedRoute";
 import { routerPaths } from "src/constant";
+import UserDetailPage from "src/pages/UserDetailPage";
 
 const MainRoutes = () => {
   return (
@@ -19,6 +20,10 @@ const MainRoutes = () => {
           <Route path="" element={<PrivatedRoute />}>
             <Route path={routerPaths.HOME} element={<Homepage />} />
             <Route path={routerPaths.USER} element={<UserPage />} />
+            <Route
+              path={`${routerPaths.USER}/:userId`}
+              element={<UserDetailPage />}
+            />
             <Route path={routerPaths.TODO} element={<TodoPage />} />
           </Route>
         </Route>

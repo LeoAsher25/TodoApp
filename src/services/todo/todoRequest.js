@@ -4,7 +4,7 @@ import { settingSliceActions } from "src/services/setting/settingSlice";
 import { todoSliceActions } from "src/services/todo/todoSlice";
 
 export const todoRequest = {
-  getAllGroup: async function (dispatch) {
+  getAllGroups: async function (dispatch) {
     try {
       dispatch(
         settingSliceActions.setItem({
@@ -13,7 +13,7 @@ export const todoRequest = {
       );
       const url = "/todo/groups";
       const res = await axiosInstance.get(url);
-      dispatch(todoSliceActions.getAllGroup(res.data.groups));
+      dispatch(todoSliceActions.getAllGroups(res.data.groups));
       dispatch(
         settingSliceActions.setItem({
           requestStatus: RequestStatus.SUCCESS,

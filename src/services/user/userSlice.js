@@ -5,7 +5,7 @@ import { getLocalStorage, setLocalStorage } from "src/utils/localStorage";
 
 const initialState = {
   currentUser: getLocalStorage("currentUser"),
-  allUser: [],
+  allUsers: [],
 };
 
 const userSlice = createSlice({
@@ -18,8 +18,8 @@ const userSlice = createSlice({
       state.currentUser = currentUser;
     },
     getAllUsers(state, action) {
-      const allUser = action.payload.allUsers;
-      state.allUser = allUser;
+      const allUsers = action.payload.allUsers;
+      state.allUsers = allUsers;
     },
   },
 });

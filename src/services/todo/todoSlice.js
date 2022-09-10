@@ -1,16 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  allGroup: [],
+  allGroups: [],
 };
 
 const todoSlice = createSlice({
   name: "todo",
   initialState,
   reducers: {
-    getAllGroup(state, action) {
-      const allGroup = action.payload;
-      state.allGroup = allGroup;
+    getAllGroups(state, action) {
+      const allGroups = action.payload;
+      state.allGroups = allGroups;
     },
   },
 });

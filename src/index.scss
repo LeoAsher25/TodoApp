@@ -16,7 +16,7 @@ code {
 * {
   padding: 0;
   margin: 0;
-  box-sizing: border-box; 
+  box-sizing: border-box;
 }
 
 // ant-layout
@@ -28,5 +28,47 @@ code {
     .ant-layout-header {
       background-color: $white-color;
     }
+
+    .ant-layout-content {
+      padding: 2rem;
+    }
+  }
+}
+
+.page-header-wrap {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+
+  .heading {
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+
+  .action-wrap {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+
+    & > button + button {
+      margin-left: 1rem;
+    }
+  }
+}
+
+// form
+
+.ant-form-item {
+  .ant-form-item-control {
+    max-width: unset;
+  }
+
+  .ant-form-item-control-input-content {
+    display: flex;
+    justify-content: flex-start !important;
+  }
+
+  .ant-form-item-explain-error {
+    text-align: left;
   }
 }

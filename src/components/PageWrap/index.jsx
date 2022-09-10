@@ -67,8 +67,6 @@ const PageWrap = () => {
           </Content>
         </Layout>
       </Layout>
-
-      <Outlet />
     </div>
   );
 };
