@@ -1,0 +1,27 @@
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+
+  .login-card {
+    width: 400px;
+    max-width: 90vw;
+
+    .login-page-title {
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+    }
+
+    .ant-form-item {
+      .ant-form-item-control {
+        max-width: unset;
+      }
+
+      .ant-form-item-explain-error {
+        text-align: left;
+      }
+    }
+  }
+}

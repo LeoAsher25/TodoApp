@@ -1,25 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import MainRoutes from "src/routes/MainRoutes";
+import { BrowserRouter } from "react-router-dom";
+import { useAppSelector } from "src/utils/hooks/customReduxHook";
+import { RootState } from "src/store/rootReducer";
+import { RequestStatus } from "src/types/commonType";
+import Loading from "src/components/Loading";
 
 function App() {
+  const { requestStatus } = useAppSelector((state: RootState) => state.setting);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        {requestStatus === RequestStatus.LOADING && <Loading />}
+        <MainRoutes />
+      </div>
+    </BrowserRouter>
   );
 }
 

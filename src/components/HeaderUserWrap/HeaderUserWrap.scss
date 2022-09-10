@@ -1,0 +1,39 @@
+@import "src/variable.scss";
+
+.dropdown-wrap {
+  background-color: $white-color;
+  border-radius: 0.5rem;
+  width: 10rem;
+
+  .username {
+    padding: 0.5rem 1rem 0.2rem;
+  }
+
+  ul {
+    padding: 0;
+    list-style: none;
+
+    li {
+      display: inline-flex;
+      width: 100%;
+      align-items: center;
+      margin: 0.2rem 0;
+      cursor: pointer;
+      transition: 0.3s;
+
+      padding: 0.5rem 1rem;
+
+      &:hover {
+        background-color: #e6f7ff;
+      }
+
+      * {
+        color: black;
+      }
+
+      .item-label {
+        margin-left: 1rem;
+      }
+    }
+  }
+}
