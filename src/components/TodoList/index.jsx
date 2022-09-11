@@ -48,7 +48,7 @@ const TodoList = ({ todoList, handleEditClick, loading }) => {
                 {
                   key: "1",
                   label: (
-                    <div onClick={() => handleEditClick(record)}> Detail </div>
+                    <div onClick={() => handleEditClick(record)}> Edit </div>
                   ),
                 },
                 {

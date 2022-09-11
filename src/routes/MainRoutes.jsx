@@ -26,6 +26,10 @@ const MainRoutes = () => {
               path={`${routerPaths.USER}/:userId`}
               element={<UserDetailPage />}
             />
+            <Route
+              path={`${routerPaths.TODO}/:todoId`}
+              element={<UserDetailPage />}
+            />
             <Route path={routerPaths.TODO} element={<TodoPage />} />
           </Route>
         </Route>

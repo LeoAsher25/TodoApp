@@ -2,7 +2,7 @@ import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar, Dropdown } from "antd";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { routerPaths } from "src/constant";
 import { authRequest } from "src/services/auth/authRequest";
 import userThunkActions, { userRequest } from "src/services/user/userRequest";
@@ -16,7 +16,7 @@ const HeaderUserWrap = () => {
   };
 
   const { currentUser } = useSelector((state) => state.user);
-  const { access_token } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -33,15 +33,19 @@ const HeaderUserWrap = () => {
                 {
                   key: "1",
                   icon: <UserOutlined />,
-                  label: <Link to={routerPaths.PROFILE}>Profile</Link>,
+                  label: "Profile",
+                  action: () => {
+                    navigate(routerPaths.PROFILE);
+                  },
                 },
                 {
                   key: "2",
                   icon: <LogoutOutlined />,
-                  label: <div onClick={handleLogout}>Log out</div>,
+                  label: "Log out",
+                  action: handleLogout,
                 },
               ].map((item) => (
-                <li key={item.key}>
+                <li key={item.key} onClick={item.action}>
                   {item.icon}
                   <span className="item-label">{item.label}</span>
                 </li>

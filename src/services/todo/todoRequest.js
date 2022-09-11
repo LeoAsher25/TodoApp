@@ -41,4 +41,29 @@ export const todoRequest = {
       console.log("err: ", err);
     }
   },
+
+  getAllTodos: async function (dispatch, groupId, todoId) {
+    try {
+      dispatch(
+        settingSliceActions.setItem({
+          requestStatus: RequestStatus.PENDING,
+        })
+      );
+      const url = `/todo/todolist?groupId=${groupId}&todoId=${todoId}`;
+      const res = await axiosInstance.get(url);
+      dispatch(
+        settingSliceActions.setItem({
+          requestStatus: RequestStatus.SUCCESS,
+        })
+      );
+      return res.data;
+    } catch (err) {
+      console.log("err: ", err);
+      dispatch(
+        settingSliceActions.setItem({
+          requestStatus: RequestStatus.ERROR,
+        })
+      );
+    }
+  },
 };

@@ -31,7 +31,13 @@ const PageWrap = () => {
   return (
     <div className="page-wrap">
       <Layout>
-        <Sider breakpoint="lg" trigger={null} collapsible collapsed={collapsed}>
+        <Sider
+          breakpoint="lg"
+          trigger={null}
+          collapsible
+          collapsedWidth={0}
+          collapsed={collapsed}
+        >
           <div className="logo">
             <span style={{ fontSize: 24, fontWeight: 700 }}>AIBB</span>
           </div>

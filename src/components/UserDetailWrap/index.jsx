@@ -1,6 +1,16 @@
-import { Avatar, Button, Card, Collapse, DatePicker, Form, Input } from "antd";
+import {
+  Avatar,
+  Button,
+  Card,
+  Collapse,
+  DatePicker,
+  Form,
+  Input,
+  Radio,
+} from "antd";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import userRequest from "src/services/user/userRequest";
 import "./UserDetailWrap.scss";
@@ -12,6 +22,7 @@ const UserDetailWrap = ({ user }) => {
   const [editUser, setEditUser] = useState(false);
   const [activeKeys, setActiveKeys] = useState(["1", "2"]);
   const dispatch = useDispatch();
+  const { currentUser } = useSelector((state) => state.user);
 
   const handleEditAuthClick = (e) => {
     e.stopPropagation();
@@ -79,8 +90,8 @@ const UserDetailWrap = ({ user }) => {
     });
 
     userFormRef.current?.setFieldsValue({
-      level: user?.access_level,
       user_status: user?.user_status,
+      access_level: user?.access_level,
       first_name: user?.details?.first_name,
       last_name: user?.details?.last_name,
       phone_number: user?.details?.phone_number,
@@ -119,7 +130,11 @@ const UserDetailWrap = ({ user }) => {
           header="Auth information"
           key="1"
           extra={
-            <Button onClick={handleEditAuthClick} type="primary">
+            <Button
+              onClick={handleEditAuthClick}
+              type="primary"
+              disabled={currentUser.access_level !== 1}
+            >
               {editAuth ? "Save information" : "Edit auth information"}
             </Button>
           }
@@ -166,7 +181,11 @@ const UserDetailWrap = ({ user }) => {
           header="User information"
           key="2"
           extra={
-            <Button onClick={handleEditUserClick} type="primary">
+            <Button
+              onClick={handleEditUserClick}
+              type="primary"
+              disabled={currentUser.access_level !== 1}
+            >
               {editUser ? "Save user information" : " Edit user information"}
             </Button>
           }
@@ -193,6 +212,41 @@ const UserDetailWrap = ({ user }) => {
 
               <Form.Item label="Birthday" name="birthday">
                 <DatePicker disabled={!editUser} onChange={onChangeDate} />
+              </Form.Item>
+
+              <Form.Item
+                label="Level"
+                name="access_level"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please select level",
+                  },
+                ]}
+              >
+                <Radio.Group disabled={!editUser}>
+                  <Radio.Button value={1}>Director</Radio.Button>
+                  <Radio.Button value={2}>Manager</Radio.Button>
+                  <Radio.Button value={3}>Member</Radio.Button>
+                </Radio.Group>
+              </Form.Item>
+
+              <Form.Item
+                label="Status"
+                name="user_status"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please select status",
+                  },
+                ]}
+              >
+                <Radio.Group disabled={!editUser}>
+                  <Radio.Button value={0}>Working</Radio.Button>
+                  <Radio.Button value={1}>Suspend</Radio.Button>
+                  <Radio.Button value={2}>Quit</Radio.Button>
+                  <Radio.Button value={3}>Deleted</Radio.Button>
+                </Radio.Group>
               </Form.Item>
 
               <Form.Item label="Notes" name="notes">

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { todoRequest } from "src/services/todo/todoRequest";
-import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
+import { PlusOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import "./TodoPage.scss";
 import TodoList from "src/components/TodoList";
 import GroupFromModal from "src/components/GroupFromModal";
@@ -44,6 +44,7 @@ const TodoPage = () => {
 
   const [openAddTodo, setOpenAddTodo] = useState(false);
   const [isEditTodo, setIsEditTodo] = useState(false);
+  const [isEditGroup, setIsEditGroup] = useState(false);
   const [selectedTodo, setSelectedTodo] = useState({});
 
   const handleOkAddTodo = (Todo) => {
@@ -58,6 +59,11 @@ const TodoPage = () => {
     setSelectedTodo(todo);
     setIsEditTodo(true);
     setOpenAddTodo(true);
+  };
+
+  const handleEditGroup = () => {
+    setOpenAddGroup(true);
+    setIsEditGroup(true);
   };
 
   useEffect(() => {
@@ -87,6 +93,8 @@ const TodoPage = () => {
         open={openAddGroup}
         onOk={handleOkAddGroup}
         onCancel={handleCloseAddGroup}
+        isEdit={isEditGroup}
+        data={selectedGroup}
       />
 
       <TodoFromModal
@@ -126,6 +134,15 @@ const TodoPage = () => {
               <div className="action-wrap">
                 <Button type="primary" danger icon={<DeleteOutlined />}>
                   Delete group
+                </Button>
+                <Button
+                  type="primary"
+                  icon={<EditOutlined />}
+                  onClick={() => {
+                    handleEditGroup();
+                  }}
+                >
+                  Edit group
                 </Button>
                 <Button
                   type="primary"
