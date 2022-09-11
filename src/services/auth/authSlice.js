@@ -16,7 +16,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     loginFail(state, action) {
-      toast.error("Login fail!");
+      // toast.error("Login fail!");
     },
     loginSuccess(state, action) {
       const access_token = action.payload.access_token;

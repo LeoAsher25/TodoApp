@@ -11,12 +11,14 @@ import "./NotificationWrap.scss";
 const NotificationWrap = () => {
   const { allNoti } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const { currentUser } = useSelector((state) => state.user);
+  const { access_token } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (allNoti.length === 0) {
+    if (currentUser && access_token) {
       userRequest.getAllNoti(dispatch);
     }
-  }, []);
+  }, [currentUser, access_token]);
 
   return (
     <Dropdown

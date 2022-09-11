@@ -6,7 +6,7 @@ import { Link, NavLink } from "react-router-dom";
 import { routerPaths } from "src/constant";
 import userRequest from "src/services/user/userRequest";
 import { userSliceActions } from "src/services/user/userSlice";
-import { getAccessLevelText } from "src/utils/helper";
+import { getAccessLevelText, getUserStatus } from "src/utils/helper";
 
 const columns = [
   {
@@ -48,6 +48,7 @@ const columns = [
     title: "Status",
     dataIndex: "user_status",
     key: "user_status",
+    render: (value) => getUserStatus(value),
   },
   {
     title: "Action",
@@ -83,6 +84,7 @@ const columns = [
 
 const UserPage = () => {
   const { allUsers } = useSelector((state) => state.user);
+  const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -114,19 +116,23 @@ const UserPage = () => {
   };
 
   const formRef = React.createRef();
+  console.log("currentUser: ", currentUser);
 
   return (
     <div className="user-page">
       <div className="page-header-wrap">
-        <Button
-          type="primary"
-          icon={<PlusOutlined />}
-          onClick={() => {
-            setOpenModal(true);
-          }}
-        >
-          Add User
-        </Button>
+        <div className="action-wrap">
+          <Button
+            type="primary"
+            icon={<PlusOutlined />}
+            onClick={() => {
+              setOpenModal(true);
+            }}
+            disabled={currentUser?.access_level === 3}
+          >
+            Add User
+          </Button>
+        </div>
       </div>
 
       <Table dataSource={allUsers} columns={columns} rowKey="id"></Table>

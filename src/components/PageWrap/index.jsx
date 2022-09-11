@@ -1,6 +1,7 @@
 import {
   AppstoreOutlined,
   FileDoneOutlined,
+  SettingOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   TeamOutlined,
@@ -52,6 +53,11 @@ const PageWrap = () => {
                 key: "3",
                 icon: <FileDoneOutlined />,
                 label: <NavLink to={routerPaths.TODO}>To Do</NavLink>,
+              },
+              {
+                key: "4",
+                icon: <SettingOutlined />,
+                label: <NavLink to={routerPaths.SETTING}>Setting</NavLink>,
               },
             ]}
           />

@@ -18,12 +18,6 @@ const HeaderUserWrap = () => {
   const { currentUser } = useSelector((state) => state.user);
   const { access_token } = useSelector((state) => state.auth);
 
-  useEffect(() => {
-    if (!currentUser && access_token) {
-      dispatch(userRequest.getProfile(dispatch));
-    }
-  }, []);
-
   return (
     <div>
       <Dropdown
