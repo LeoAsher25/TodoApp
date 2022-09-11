@@ -1,11 +1,12 @@
-import { Button, Dropdown, Menu, Table } from "antd";
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { EllipsisOutlined, PlusOutlined } from "@ant-design/icons";
+import { Button, Dropdown, Form, Input, Menu, Modal, Radio, Table } from "antd";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, NavLink } from "react-router-dom";
+import { routerPaths } from "src/constant";
 import userRequest from "src/services/user/userRequest";
-import { getAccessLevelText } from "src/utils/userHelper";
-import { PlusOutlined, EllipsisOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { userSliceActions } from "src/services/user/userSlice";
+import { getAccessLevelText } from "src/utils/helper";
 
 const columns = [
   {
@@ -59,7 +60,11 @@ const columns = [
             items={[
               {
                 key: "1",
-                label: "Edit",
+                label: (
+                  <NavLink to={`${routerPaths.USER}/${record.id}`}>
+                    Detail
+                  </NavLink>
+                ),
               },
               {
                 key: "2",
@@ -85,15 +90,111 @@ const UserPage = () => {
       userRequest.getAllUsers(dispatch);
     }
   }, []);
+
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleOk = () => {
+    userRequest.addUser(
+      formRef.current?.getFieldsValue(),
+      dispatch,
+      handleAddUserSuccessfully
+    );
+  };
+
+  const handleAddUserSuccessfully = (newUser) => {
+    dispatch(
+      userSliceActions.getAllUsers({ allUsers: [{ ...newUser }, ...allUsers] })
+    );
+    handleCancel();
+  };
+
+  const handleCancel = () => {
+    formRef.current?.resetFields();
+    setOpenModal(false);
+  };
+
+  const formRef = React.createRef();
+
   return (
     <div className="user-page">
       <div className="page-header-wrap">
-        <Button type="primary" icon={<PlusOutlined />}>
+        <Button
+          type="primary"
+          icon={<PlusOutlined />}
+          onClick={() => {
+            setOpenModal(true);
+          }}
+        >
           Add User
         </Button>
       </div>
 
-      <Table dataSource={allUsers} columns={columns}></Table>
+      <Table dataSource={allUsers} columns={columns} rowKey="id"></Table>
+
+      <Modal
+        title="Add User"
+        open={openModal}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <Form ref={formRef} layout="vertical" autoComplete="off">
+          <Form.Item
+            label="Level"
+            name="access_level"
+            rules={[
+              {
+                required: true,
+                message: "Please select level",
+              },
+            ]}
+          >
+            <Radio.Group>
+              <Radio.Button value={1}>Director</Radio.Button>
+              <Radio.Button value={2}>Manager</Radio.Button>
+              <Radio.Button value={3}>Member</Radio.Button>
+            </Radio.Group>
+          </Form.Item>
+
+          <Form.Item
+            label="Username"
+            name="username"
+            rules={[
+              {
+                required: true,
+                message: "Please select username",
+              },
+            ]}
+          >
+            <Input placeholder="Enter username" />
+          </Form.Item>
+
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[
+              {
+                required: true,
+                message: "Please select email",
+              },
+            ]}
+          >
+            <Input placeholder="Enter email" />
+          </Form.Item>
+
+          <Form.Item
+            label="Password"
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: "Please select password",
+              },
+            ]}
+          >
+            <Input.Password placeholder="Enter password" />
+          </Form.Item>
+        </Form>
+      </Modal>
     </div>
   );
 };

@@ -1,13 +1,4 @@
-import {
-  Button,
-  Card,
-  Checkbox,
-  Collapse,
-  DatePicker,
-  Form,
-  FormInstance,
-  Input,
-} from "antd";
+import { Avatar, Button, Card, Collapse, DatePicker, Form, Input } from "antd";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -16,12 +7,13 @@ import "./UserDetailWrap.scss";
 
 const { Panel } = Collapse;
 
-const UserDetailWrap = ({ user }: any) => {
+const UserDetailWrap = ({ user }) => {
   const [editAuth, setEditAuth] = useState(false);
   const [editUser, setEditUser] = useState(false);
+  const [activeKeys, setActiveKeys] = useState(["1", "2"]);
   const dispatch = useDispatch();
 
-  const handleEditAuthClick = (e: any) => {
+  const handleEditAuthClick = (e) => {
     e.stopPropagation();
     if (editAuth) {
       userRequest.updateEmployeeAuthInfo(
@@ -33,31 +25,51 @@ const UserDetailWrap = ({ user }: any) => {
         setEditAuth(!editAuth)
       );
     } else {
+      setActiveKeys([...activeKeys, "1"]);
       setEditAuth(!editAuth);
     }
   };
 
-  const handleEditUserClick = (e: any) => {
+  const handleEditUserClick = (e) => {
     e.stopPropagation();
 
     if (editUser) {
       userRequest.updateEmployeeInfo(
         {
-          ...authFormRef.current?.getFieldsValue(),
+          ...userFormRef.current?.getFieldsValue(),
           id: user?.id,
         },
         dispatch,
         setEditUser(!editUser)
       );
     } else {
+      setActiveKeys([...activeKeys, "2"]);
       setEditUser(!editUser);
     }
   };
 
   const onChangeDate = () => {};
 
-  const authFormRef = React.createRef<FormInstance>();
-  const userFormRef = React.createRef<FormInstance>();
+  const handleChangeActive = (keys) => {
+    setActiveKeys([...keys]);
+  };
+
+  const [avaPath, setAvaPath] = useState("");
+
+  const handleUploadAva = async (event) => {
+    try {
+      const formData = new FormData();
+      formData.append("file_data", event.target.value);
+      formData.append("type", "image/jpeg");
+      const response = await userRequest.uploadData(formData, dispatch);
+      setAvaPath(response.file_location);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const authFormRef = React.createRef();
+  const userFormRef = React.createRef();
 
   useEffect(() => {
     authFormRef.current?.setFieldsValue({
@@ -79,11 +91,30 @@ const UserDetailWrap = ({ user }: any) => {
       passport_1: user?.details?.passport_1,
       passport_2: user?.details?.passport_2,
     });
+
+    setAvaPath(user?.details?.face);
   }, [user]);
 
   return (
     <Card className="card-detail-wrap">
-      <Collapse expandIconPosition="end" defaultActiveKey={["1", "2"]}>
+      <div className="avatar-wrap">
+        <Avatar
+          src={"https://cms.aibb.vn/backend/public" + avaPath}
+          size={150}
+        />
+
+        <Button className="upload-ava">
+          <label htmlFor="upload-ava">Change avatar</label>
+        </Button>
+
+        <input type="file" hidden id="upload-ava" onChange={handleUploadAva} />
+      </div>
+
+      <Collapse
+        expandIconPosition="end"
+        activeKey={activeKeys}
+        onChange={handleChangeActive}
+      >
         <Panel
           header="Auth information"
           key="1"
@@ -96,7 +127,7 @@ const UserDetailWrap = ({ user }: any) => {
           <div className="form-wrap">
             <Form
               ref={authFormRef}
-              name="basic"
+              name="authForm"
               labelCol={{ span: 8 }}
               autoComplete="off"
               layout="vertical"
@@ -104,31 +135,28 @@ const UserDetailWrap = ({ user }: any) => {
               <Form.Item
                 label="Username"
                 name="username"
-                rules={[
-                  { required: true, message: "Please input your username!" },
-                ]}
+                rules={[{ required: true, message: "Please enter username!" }]}
               >
-                <Input disabled={!editAuth} />
+                <Input disabled={!editAuth} placeholder="Enter username" />
               </Form.Item>
 
               <Form.Item
                 label="Email"
                 name="email"
-                rules={[
-                  { required: true, message: "Please input your email!" },
-                ]}
+                rules={[{ required: true, message: "Please enter email!" }]}
               >
-                <Input disabled={!editAuth} />
+                <Input disabled={!editAuth} placeholder="Enter email" />
               </Form.Item>
 
               <Form.Item
                 label="Password"
                 name="password"
-                rules={[
-                  { required: true, message: "Please input your password!" },
-                ]}
+                rules={[{ required: true, message: "Please enter password!" }]}
               >
-                <Input.Password disabled={!editAuth} />
+                <Input.Password
+                  disabled={!editAuth}
+                  placeholder="Enter password"
+                />
               </Form.Item>
             </Form>
           </div>
@@ -146,21 +174,21 @@ const UserDetailWrap = ({ user }: any) => {
           <div className="form-wrap">
             <Form
               ref={userFormRef}
-              name="basic"
+              name="userForm"
               labelCol={{ span: 8 }}
               autoComplete="off"
               layout="vertical"
             >
               <Form.Item label="First name" name="first_name">
-                <Input disabled={!editUser} />
+                <Input disabled={!editUser} placeholder="Enter first name" />
               </Form.Item>
 
               <Form.Item label="Last name" name="last_name">
-                <Input disabled={!editUser} />
+                <Input disabled={!editUser} placeholder="Enter last name" />
               </Form.Item>
 
               <Form.Item label="Phone" name="phone_number">
-                <Input disabled={!editUser} />
+                <Input disabled={!editUser} placeholder="Enter phone number" />
               </Form.Item>
 
               <Form.Item label="Birthday" name="birthday">
@@ -168,7 +196,11 @@ const UserDetailWrap = ({ user }: any) => {
               </Form.Item>
 
               <Form.Item label="Notes" name="notes">
-                <Input.TextArea rows={4} disabled={!editUser} />
+                <Input.TextArea
+                  rows={4}
+                  disabled={!editUser}
+                  placeholder="Enter note"
+                />
               </Form.Item>
             </Form>
           </div>

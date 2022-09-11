@@ -6,7 +6,7 @@ import {
   TeamOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import HeaderUserWrap from "src/components/HeaderUserWrap";
 import NotificationWrap from "src/components/NotificationWrap";
@@ -17,10 +17,20 @@ const PageWrap = () => {
   const { Header, Sider, Content } = Layout;
   const [collapsed, setCollapsed] = useState(false);
 
+  useEffect(() => {
+    window.onresize = () => {
+      if (window.innerWidth < 992) {
+        setCollapsed(true);
+      } else {
+        setCollapsed(false);
+      }
+    };
+  }, []);
+
   return (
     <div className="page-wrap">
       <Layout>
-        <Sider trigger={null} collapsible collapsed={collapsed}>
+        <Sider breakpoint="lg" trigger={null} collapsible collapsed={collapsed}>
           <div className="logo">
             <span style={{ fontSize: 24, fontWeight: 700 }}>AIBB</span>
           </div>

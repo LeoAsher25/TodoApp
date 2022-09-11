@@ -38,17 +38,17 @@ const LoginPage = () => {
           <Form.Item
             label="Email"
             name="email"
-            rules={[{ required: true, message: "Please input your email!" }]}
+            rules={[{ required: true, message: "Please enter your email!" }]}
           >
-            <Input />
+            <Input placeholder="Enter email" />
           </Form.Item>
 
           <Form.Item
             label="Password"
             name="password"
-            rules={[{ required: true, message: "Please input your password!" }]}
+            rules={[{ required: true, message: "Please enter your password!" }]}
           >
-            <Input.Password />
+            <Input.Password placeholder="Enter password" />
           </Form.Item>
 
           <Button type="primary" htmlType="submit">

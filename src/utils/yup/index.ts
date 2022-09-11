@@ -5,8 +5,8 @@ import * as yup from "yup";
 export const loginSchema = yup.object().shape({
   email: yup
     .string()
-    .email("Please input a valid email")
-    .required("Please input your email!"),
+    .email("Please enter a valid email")
+    .required("Please enter your email!"),
 
   password: yup
     .string()

@@ -1,4 +1,4 @@
-import { Button, Card } from "antd";
+import { Button, Card, Modal } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -16,8 +16,6 @@ const UserDetailPage = () => {
     };
     fetchUser();
   }, [userId]);
-
-  const [openModal, setOpenModal] = useState(false);
 
   return (
     <div className="user-detail-page">

@@ -5,11 +5,15 @@ import { useSelector } from "react-redux";
 import { todoRequest } from "src/services/todo/todoRequest";
 import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
 import "./TodoPage.scss";
+import TodoList from "src/components/TodoList";
+import GroupFromModal from "src/components/GroupFromModal";
+import TodoFromModal from "src/components/TodoFromModal";
 
 const TodoPage = () => {
   const { allGroups } = useSelector((state) => state.todo);
   const [selectedGroup, setSelectedGroup] = useState({});
   const [todoList, setTodoList] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
   const handleSelectGroup = ({ key }) => {
@@ -28,13 +32,79 @@ const TodoPage = () => {
     }
   }, [allGroups]);
 
+  const [openAddGroup, setOpenAddGroup] = useState(false);
+
+  const handleOkAddGroup = (group) => {
+    setOpenAddGroup(false);
+  };
+
+  const handleCloseAddGroup = () => {
+    setOpenAddGroup(false);
+  };
+
+  const [openAddTodo, setOpenAddTodo] = useState(false);
+  const [isEditTodo, setIsEditTodo] = useState(false);
+  const [selectedTodo, setSelectedTodo] = useState({});
+
+  const handleOkAddTodo = (Todo) => {
+    setOpenAddTodo(false);
+  };
+
+  const handleCloseAddTodo = () => {
+    setOpenAddTodo(false);
+  };
+
+  const handleEditClick = (todo) => {
+    setSelectedTodo(todo);
+    setIsEditTodo(true);
+    setOpenAddTodo(true);
+  };
+
+  useEffect(() => {
+    if (selectedGroup && selectedGroup.id) {
+      const fetchTodo = async () => {
+        try {
+          setLoading(true);
+          const response = await todoRequest.getAllTodos(
+            dispatch,
+            selectedGroup.id
+          );
+          setTodoList(response);
+          setLoading(false);
+        } catch (err) {
+          setLoading(false);
+          console.log("err: ", err);
+        }
+      };
+
+      fetchTodo();
+    }
+  }, [selectedGroup]);
+
   return (
     <div className="todo-page">
+      <GroupFromModal
+        open={openAddGroup}
+        onOk={handleOkAddGroup}
+        onCancel={handleCloseAddGroup}
+      />
+
+      <TodoFromModal
+        open={openAddTodo}
+        onOk={handleOkAddTodo}
+        onCancel={handleCloseAddTodo}
+        isEdit={isEditTodo}
+        data={selectedTodo}
+      />
       <Row gutter={16}>
         <Col span={6}>
           <Card>
             <div className="groups-list-header">
-              <Button type="primary" icon={<PlusOutlined />}>
+              <Button
+                type="primary"
+                icon={<PlusOutlined />}
+                onClick={() => setOpenAddGroup(true)}
+              >
                 Add Group
               </Button>
             </div>
@@ -57,10 +127,22 @@ const TodoPage = () => {
                 <Button type="primary" danger icon={<DeleteOutlined />}>
                   Delete group
                 </Button>
-                <Button type="primary" icon={<PlusOutlined />}>
+                <Button
+                  type="primary"
+                  icon={<PlusOutlined />}
+                  onClick={() => setOpenAddTodo(true)}
+                >
                   Add Task
                 </Button>
               </div>
+            </div>
+
+            <div className="todo-list-wrap">
+              <TodoList
+                todoList={todoList}
+                handleEditClick={handleEditClick}
+                loading={loading}
+              />
             </div>
           </Card>
         </Col>

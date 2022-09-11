@@ -14,4 +14,37 @@
   .form-wrap {
     margin-bottom: 4rem;
   }
+
+  .avatar-wrap {
+    margin: 1rem auto 3rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .ant-avatar {
+      border-radius: 50%;
+      border: 1px solid #0001;
+    }
+
+    .upload-ava {
+      margin-top: 0.8rem;
+      position: relative;
+      width: 120px;
+      cursor: pointer;
+
+      & > label {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+      }
+    }
+  }
 }

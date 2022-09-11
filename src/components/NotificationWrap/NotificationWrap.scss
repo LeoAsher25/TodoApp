@@ -1,0 +1,52 @@
+@import "src/variable.scss";
+
+.noti-wrap {
+  background-color: $white-color;
+  border-radius: 0.5rem;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.05);
+  padding: 0.5rem;
+
+  .title {
+    padding: 0.5rem 1rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .noti-list {
+    padding: 0;
+    list-style: none;
+
+    .noti-item {
+      transition: 0.3s;
+
+      .noti-content-wrap {
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        border-radius: 5px;
+
+        &:hover {
+          background-color: $hover-color;
+        }
+        .content {
+          color: black;
+          font-size: 1rem;
+        }
+
+        .created-at {
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}
+
+.bell-wrap {
+  margin-right: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
