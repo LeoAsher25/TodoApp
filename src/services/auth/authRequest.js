@@ -11,7 +11,7 @@ export const authRequest = {
       const url = "/login";
       const res = await axiosInstance.post(url, data);
       dispatch(authSliceActions.loginSuccess(res.data));
-      dispatch(userRequest.getProfile(dispatch));
+      userRequest.getProfile(dispatch);
     } catch (err) {
       dispatch(authSliceActions.loginFail(err));
     }

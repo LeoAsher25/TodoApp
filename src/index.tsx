@@ -1,26 +1,23 @@
-import React, { Suspense } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.scss";
 import "src/configs";
+import "./index.scss";
 
+import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
+import { store } from "src/store/rootReducer";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { store } from "src/store/rootReducer";
-import { Provider } from "react-redux";
-import Loading from "src/components/Loading";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <Suspense fallback={<Loading />}>
-      <Provider store={store}>
-        <App />
-        <ToastContainer />
-      </Provider>
-    </Suspense>
+    <Provider store={store}>
+      <App />
+      <ToastContainer />
+    </Provider>
   </React.StrictMode>
 );
 
