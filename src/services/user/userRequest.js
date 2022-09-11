@@ -1,6 +1,6 @@
 import { createAction } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
-import axiosInstance from "src/api/axiosInstance";
+import axiosInstance from "src/utils/axiosInstance";
 import { RequestStatus } from "src/constant";
 import { settingSliceActions } from "src/services/setting/settingSlice";
 import { userSliceActions } from "src/services/user/userSlice";

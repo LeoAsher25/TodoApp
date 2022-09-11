@@ -1,4 +1,4 @@
-import axiosInstance from "src/api/axiosInstance";
+import axiosInstance from "src/utils/axiosInstance";
 import { RequestStatus } from "src/constant";
 import { settingSliceActions } from "src/services/setting/settingSlice";
 import { todoSliceActions } from "src/services/todo/todoSlice";

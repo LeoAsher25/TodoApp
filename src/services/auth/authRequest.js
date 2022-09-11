@@ -1,5 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
-import axiosInstance from "src/api/axiosInstance";
+import axiosInstance from "src/utils/axiosInstance";
 import { authSliceActions } from "src/services/auth/authSlice";
 import { routerPaths } from "src/constant";
 import { userSliceActions } from "../user/userSlice";
