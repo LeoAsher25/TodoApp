@@ -64,7 +64,7 @@ const TodoList = ({ todoList, handleEditClick, loading }) => {
       ),
     },
   ];
-
+  console.log("todoList: ", todoList)
   return (
     <div>
       <Table

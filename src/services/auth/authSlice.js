@@ -15,9 +15,6 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    loginFail(state, action) {
-      // toast.error("Login fail!");
-    },
     loginSuccess(state, action) {
       const access_token = action.payload.access_token;
       state.access_token = access_token;
@@ -28,6 +25,10 @@ const authSlice = createSlice({
     logout(state, action) {
       state.access_token = "";
       removeLocalStorage("access_token");
+    },
+
+    loginFail(state, action) {
+      toast.error("Login fail!");
     },
   },
 });

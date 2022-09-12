@@ -42,7 +42,7 @@ export const todoRequest = {
     }
   },
 
-  getAllTodos: async function (dispatch, groupId, todoId) {
+  getDetailTodo: async function (dispatch, groupId, todoId) {
     try {
       dispatch(
         settingSliceActions.setItem({

@@ -1,9 +1,8 @@
 import { createAction } from "@reduxjs/toolkit";
-import axiosInstance from "src/utils/axiosInstance";
 import { authSliceActions } from "src/services/auth/authSlice";
-import { routerPaths } from "src/constant";
-import { userSliceActions } from "../user/userSlice";
+import axiosInstance from "src/utils/axiosInstance";
 import userRequest from "../user/userRequest";
+import { userSliceActions } from "../user/userSlice";
 
 export const authRequest = {
   login: async function (data, dispatch) {
@@ -11,6 +10,7 @@ export const authRequest = {
       const url = "/login";
       const res = await axiosInstance.post(url, data);
       dispatch(authSliceActions.loginSuccess(res.data));
+      // res.data = { access_token: '....'}
       userRequest.getProfile(dispatch);
     } catch (err) {
       dispatch(authSliceActions.loginFail(err));
